@@ -1,0 +1,6 @@
+soundfonts/
+*.mid
+*.wav
+*.txt
+.vscode/
+__pycache__/
