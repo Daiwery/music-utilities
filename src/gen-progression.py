@@ -15,6 +15,10 @@ parser.add_argument(
     "-length", type=int, default="4",
     help="The length of the progression. Must be 1 <= length <= 6. Default '4'."
 )
+parser.add_argument(
+    "-mode", choices=["1", "2"], default="1",
+    help="Various modes. Try it. Default '1'."
+)
 args = parser.parse_args()
 
 if args.key == "random":
@@ -35,20 +39,50 @@ for numeral in progression:
     file.write(f"{numeral.figure} : {chord}\n")
 
 # Create stream with notes.
-stream = music21.stream.Stream()
-for numeral in progression:
-    pitches = list(numeral.pitches)
+if args.mode == "1":
+    stream = music21.stream.Stream()
+    for numeral in progression:
+        pitches = list(numeral.pitches)
 
-    for i in range(len(pitches)):
-        pitches[i].octave = 4
-    
-    tonic = copy.deepcopy(numeral.root())
-    tonic.octave = 3
-    pitches.append(tonic)
-    
-    chord = music21.chord.Chord(pitches)
-    for i in range(4):
-        stream.append(copy.deepcopy(chord))
+        for i in range(len(pitches)):
+            pitches[i].octave = 4
+        
+        tonic = copy.deepcopy(numeral.root())
+        tonic.octave = 3
+        pitches.append(tonic)
+        
+        chord = music21.chord.Chord(pitches)
+        for i in range(4):
+            stream.append(copy.deepcopy(chord))
+
+if args.mode == "2":
+    stream = music21.stream.Stream()
+    for numeral in progression:
+        sub_stream = music21.stream.Stream()
+
+        pitches = list(numeral.pitches)
+        length = len(pitches)
+
+        for i in range(length):
+            pitches[i].octave = 4
+
+        tonic = copy.deepcopy(numeral.root())
+        tonic.octave = 3
+
+        border = music21.pitch.Pitch("F3")
+        if tonic > border:
+            tonic.octave = 2
+
+        tonic = music21.note.Note(tonic)
+        tonic.duration = music21.duration.Duration(length+1)
+        sub_stream.append(tonic)
+
+        for i, pitch in enumerate(pitches):
+            note = music21.note.Note(pitch)
+            note.duration = music21.duration.Duration(length-i)
+            sub_stream.insertAndShift(i+1, note)
+        
+        stream.append(sub_stream)
 
 # Repeat.
 main_stream = music21.stream.Stream()

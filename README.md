@@ -6,7 +6,7 @@ Some scripts used music21 and mingus.
 Generate a random progression. Save two files: txt-file and mid-file.
 
 Usage:
-```console
+```sh
 python src/gen-progression.py
 fluidsynth soundfonts/name.sf2 progression.mid -F progression.wav
 open progression.wav
