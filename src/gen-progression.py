@@ -52,7 +52,8 @@ if args.mode == "1":
         pitches.append(tonic)
         
         chord = music21.chord.Chord(pitches)
-        for i in range(4):
+        chord.duration = music21.duration.Duration(4)
+        for i in range(1):
             stream.append(copy.deepcopy(chord))
 
 if args.mode == "2":
