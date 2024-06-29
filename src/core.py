@@ -23,8 +23,8 @@ def generate_random_key() -> music21.key.Key:
     g minor
     """
     key = music21.note.Note(random.randint(0, 11)).name
+    key += "M" if random.random() >= 0.5 else "m"
     key = music21.key.Key(key)
-    key.mode = "major" if random.random() >= 0.5 else "minor"
     return key
 
 
