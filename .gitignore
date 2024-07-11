@@ -1,4 +1,4 @@
-soundfonts/
+*.sf2
 *.mid
 *.wav
 *.txt
