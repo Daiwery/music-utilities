@@ -1,15 +1,14 @@
 # music-utilities
 
-Some scripts used music21 and mingus.
+Some scripts used music21. Use setup.sh for setup.
 
-### gen-progression.py
-Generate a random progression. Save two files: txt-file and mid-file.
+All exercises create the midi-file and ly-file (with pdf output). To create wav-file use fluidsynth.
 
-Usage:
+General usage of any exercises:
 ```sh
-python src/gen-progression.py
-fluidsynth soundfonts/name.sf2 progression.mid -F progression.wav
-open progression.wav
+python exs/ex1.py
+fluidsynth soundfonts/SalamanderGrandPiano-V3.sf2 tmp/exercise.mid -F tmp/exercise.wav
+ffplay -loop 0 tmp/output.wav
 ```
 
-For more info see 'help'.
+You can read the documentation of all exercises in exs/ itself.
