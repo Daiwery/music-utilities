@@ -8,7 +8,7 @@ General usage of any exercises:
 ```sh
 python exs/ex1.py
 fluidsynth soundfonts/SalamanderGrandPiano-V3.sf2 tmp/exercise.mid -F tmp/exercise.wav
-ffplay -loop 0 tmp/output.wav
+ffplay -loop 0 tmp/exercise.wav
 ```
 
 You can read the documentation of all exercises in exs/ itself.

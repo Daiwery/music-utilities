@@ -3,7 +3,7 @@ import music21
 import random
 
 
-def generate_random_major_key() -> music21.key.Key:
+def random_major_key() -> music21.key.Key:
     """Generate a random major key.
 
     Returns
