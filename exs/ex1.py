@@ -11,14 +11,20 @@ from key import *
 import random
 
 # ===== Parameters =====
-# Define the key.
-key = music21.key.Key("C")
+# key = random_major_key()
+key = music21.key.Key("A")
+forceOctave = 2
 
 def generate_progression(pitches):
     """Function for generation progression via pitches (with tonic note) from given key."""
-    progression = pitches[1:]
+    tonic = pitches[0]
+    delta = tonic.octave - forceOctave
+    for pitch in pitches:
+        pitch.octave -= delta
+
+    progression = pitches[:5]
     random.shuffle(progression)
-    return progression[:3]
+    return [tonic] + progression[:3]
     
 
 pitches = key.pitches
@@ -30,12 +36,11 @@ tonicTriad = music21.roman.RomanNumeral("I", key)
 
 stream = music21.stream.Stream()
 
-tonicChord = music21.chord.Chord(list(tonicTriad.pitches)).closedPosition(forceOctave=3)
+tonicChord = music21.chord.Chord(list(tonicTriad.pitches)).closedPosition(forceOctave=forceOctave)
 tonicChord.duration = music21.duration.Duration(type="half")
 stream.append(tonicChord)
 
 progression = generate_progression(pitches)
-progression = [tonic] + progression
 progression *= 4
 
 for pitch in progression:
